@@ -39,19 +39,22 @@ client.init("1aeab05cb98c466da774d7254e33cfbc", function() {
 client.join(null, "myChannel", null, (uid)=>{
     // Create a local stream
     console.log("custom",uid)
+
+    let localStream = AgoraRTC.createStream({
+        audio: true,
+        video: false,
+    });
+    // Initialize the local stream
+    localStream.init(()=>{
+        // Play the local stream
+        localStream.play("me");
+        // Publish the local stream
+        client.publish(localStream, handleError);
+    }, handleError);
+
+    
   }, handleError);
 
-  let localStream = AgoraRTC.createStream({
-    audio: true,
-    video: false,
-});
-// Initialize the local stream
-localStream.init(()=>{
-    // Play the local stream
-    localStream.play("me");
-    // Publish the local stream
-    client.publish(localStream, handleError);
-}, handleError);
 
 // Subscribe to the remote stream when it is published
 client.on("stream-added", function(evt){
