@@ -29,21 +29,21 @@ let client = AgoraRTC.createClient({
     codec: "vp8",
 });
 
-client.init("027ee62c0e734d97911396d53ec6e417", function() {
+client.init("1aeab05cb98c466da774d7254e33cfbc", function() {
     console.log("client initialized");
 }, function(err) {
     console.log("client init failed ", err);
 });
 
 // Join a channel
-client.join("30e95cfe434b40f1845093e3561d0d45", "myChannel", null, (uid)=>{
+client.join(null, "myChannel", null, (uid)=>{
     // Create a local stream
     console.log("custom",uid)
   }, handleError);
 
   let localStream = AgoraRTC.createStream({
     audio: true,
-    video: true,
+    video: false,
 });
 // Initialize the local stream
 localStream.init(()=>{
