@@ -42,7 +42,7 @@ client.join(null, "myChannel", null, (uid)=>{
 
     let localStream = AgoraRTC.createStream({
         audio: true,
-        video: false,
+        video: true,
     });
     // Initialize the local stream
     localStream.init(()=>{
@@ -67,3 +67,17 @@ client.on("stream-subscribed", function(evt){
     addVideoStream(streamId);
     stream.play(streamId);
 });
+
+client.on('stream-removed',function(evt){
+    let stream = evt.stream;
+    let streamId = String(stream.getId());
+    stream.close();
+    removeVideoStream(streamId);
+})
+
+client.on('peer-leave',function(evt){
+    let stream = evt.stream;
+    let streamId = String(stream.getId());
+    stream.close();
+    removeVideoStream(streamId);
+})
